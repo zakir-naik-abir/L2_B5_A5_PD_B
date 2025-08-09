@@ -95,7 +95,7 @@ const confirmDelivery = catchAsync(
   async (req: Request, res: Response) => {
     const { parcelId} = req.params;
 
-    const result = await ParcelService.confirmDelivery(req.user!, parcelId);
+    const result = await ParcelService.confirmDelivery(req.user as any, parcelId);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,

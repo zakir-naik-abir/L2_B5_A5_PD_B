@@ -9,5 +9,6 @@ export const parcelValidationSchema = z.object({
     parcelWeight: z.number(),
     parcelType: z.string(),
     deliveryFee: z.number().optional(),
+    
   }),
 });

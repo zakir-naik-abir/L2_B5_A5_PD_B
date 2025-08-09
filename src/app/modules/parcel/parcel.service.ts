@@ -108,13 +108,16 @@ const confirmDelivery = async (user: JwtPayload, parcelId: string) =>{
     throw new AppError(httpStatus.NOT_FOUND, 'Parcel not found');
   }
 
-  const receiverUser = await User.findById(user.userId);
+  const receiverUser = await User.findById(user);
   if(!receiverUser){
     throw new AppError(httpStatus.NOT_FOUND, 'Receiver not found');
   }
+    console.log(parcel.receiverPhone)
+    console.log(receiverUser.phone)
   if(parcel.receiverPhone !== receiverUser.phone){
     throw new AppError(httpStatus.FORBIDDEN, 'You are not the intended receiver of this parcel')
   }
+
   if(parcel.status !== 'Delivered'){
     throw new AppError(httpStatus.BAD_REQUEST, 'parcel is not marked as delivered yet')
   }

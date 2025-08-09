@@ -24,7 +24,7 @@ const userSchema = new Schema<IUser>({
     required: true,
     default: IUserRole.SENDER
   },
-  phone: { type: String },
+  phone: { type: String, required: true },
   picture: { type: String },
   address: { type: String },
   isBlocked: { type: Boolean, default: false},

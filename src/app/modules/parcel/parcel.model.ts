@@ -6,7 +6,7 @@ const statusLogSchema = new Schema<IStatusLog>({
     'Requested', 'Approved', 'Dispatched', 'In-Transit', 'Delivered', 'Cancelled', 'Confirmed'
   ], required: true },
   timestamp: { type: Date, default: Date.now },
-  updateBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  updateBy: { type: Schema.Types.ObjectId, ref: 'User'},
   notes: { type: String }
 }, {
   versionKey: false

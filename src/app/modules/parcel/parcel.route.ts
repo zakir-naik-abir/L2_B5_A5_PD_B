@@ -2,6 +2,8 @@ import { Router } from "express";
 import { ParcelController } from "./parcel.controller";
 import { authCheck } from "../../middleware/authCheck";
 import { IUserRole } from "../user/user.interface";
+import { validateRequest } from "../../middleware/validateRequest";
+import { updateZodSchema } from "../user/user.validation";
 
 const router = Router();
 
@@ -14,16 +16,17 @@ router.post(
   ParcelController.createParcel
 );
 
-router.get('/my-parcels', authCheck(IUserRole.ADMIN, IUserRole.SENDER, IUserRole.RECEIVER), ParcelController.getMyParcels);
+router.get('/my-parcels', authCheck(...Object.values(IUserRole)), ParcelController.getMyParcels);
+
+// router.get('/my-parcels', authCheck(IUserRole.ADMIN, IUserRole.SENDER, IUserRole.RECEIVER), ParcelController.getMyParcels);
 
 router.get('/all-parcel', authCheck(IUserRole.ADMIN), ParcelController.getAllParcelsForAdmin)
 
-router.patch('/cancel/:parcelId', authCheck(IUserRole.SENDER), ParcelController.cancelParcel);
+router.patch('/cancel/:parcelId', authCheck(...Object.values(IUserRole)), ParcelController.cancelParcel);
 
-router.patch('/confirm/:parcelId', authCheck(IUserRole.RECEIVER), ParcelController.cancelParcel);
+router.patch('/confirm/:parcelId', authCheck(IUserRole.RECEIVER), ParcelController.confirmDelivery);
 
 router.patch('/update-status/:parcelId', authCheck(IUserRole.ADMIN),
-//  validateRequest(parcelValidationSchema.updateStatusValidationSchema), 
 ParcelController.updateParcelStatus)
 
 export const ParcelRoutes = router;
