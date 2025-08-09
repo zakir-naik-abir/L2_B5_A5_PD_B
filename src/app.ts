@@ -1,11 +1,11 @@
 import passport from 'passport';
 import expressSession from 'express-session';
 import express, { Request, Response } from "express"
-
 import cors from "cors";
-
 import { envVars } from './app/config/env';
 import { notFound } from './app/middleware/notFound';
+import { router } from './app/routes';
+import "./app/config/passport";
 
 const app = express();
 
@@ -27,14 +27,13 @@ const corsOptions = {
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
+app.use("/api/v1", router);
 
 app.get('/', (req: Request, res: Response) =>{
   res.status(200).json({
     message: "🚚 Welcome to Parcel Delivery System Backend"
   })
 });
-
-
 
 app.use(notFound);
 
