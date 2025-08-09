@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
 import { model, Schema } from "mongoose";
-import { IAuthProvider, IUser } from "./user.interface";
+import { IAuthProvider, IUser, IUserRole } from "./user.interface";
 import { envVars } from "../../config/env";
 
 const authProviderSchema = new Schema<IAuthProvider>(
@@ -18,7 +18,12 @@ const userSchema = new Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String },
-  role: { type: String, enum: ['admin', 'sender', 'receiver'] },
+ role: { 
+    type: String,
+    enum: Object.values(IUserRole),
+    required: true,
+    default: IUserRole.SENDER
+  },
   phone: { type: String },
   picture: { type: String },
   address: { type: String },

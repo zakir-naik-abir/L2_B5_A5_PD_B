@@ -1,16 +1,16 @@
 import httpStatus from "http-status-codes";
 import { NextFunction, Request, Response } from "express";
+import AppError from "../error/AppError";
+import { verifyToken } from "../utils/jwt";
 import { envVars } from "../config/env";
 import { JwtPayload } from "jsonwebtoken";
 import { User } from "../modules/user/user.model";
-import AppError from "../error/AppError";
-import { verifyToken } from "../utils/jwt";
+
 
 export const authCheck =
   (...authRoles: string[]) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-
 
       const accessToken = req.headers.authorization;
 
@@ -35,7 +35,6 @@ export const authCheck =
       }
 
       
-
       if (!isUserExist.isVerified) {
         throw new AppError(httpStatus.BAD_REQUEST, "User is not verified");
       }
@@ -43,9 +42,9 @@ export const authCheck =
       if (isUserExist.isBlocked) {
         throw new AppError(httpStatus.BAD_REQUEST, "User is blocked");
       }
-      if (!authRoles.includes(verifiedToken.role)) {
-        throw new AppError(401, "You are not permitted to view this route!!");
-      }
+      // if (!authRoles.includes(verifiedToken.role)) {
+      //   throw new AppError(401, "You are not permitted to view this route!!");
+      // }
       if(!authRoles.includes(isUserExist.role)){
         throw new AppError(401, "You are not permitted this route")
       }
