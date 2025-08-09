@@ -4,8 +4,8 @@ import express, { Request, Response } from "express"
 
 import cors from "cors";
 
-import { envVars } from './config/env';
-import { notFound } from './middleware/notFound';
+import { envVars } from './app/config/env';
+import { notFound } from './app/middleware/notFound';
 
 const app = express();
 
