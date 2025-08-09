@@ -16,6 +16,8 @@ app.use(expressSession({
 }))
 app.use(passport.initialize());
 app.use(express.json());
+app.set("trust proxy", 1);
+app.use(express.urlencoded({extended: true}));
 
 const corsOptions = {
   origin: '*', 
